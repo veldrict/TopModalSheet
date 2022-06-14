@@ -17,7 +17,7 @@ Future<T?> showTopModalSheet<T>({
 
 class TopModalSheet<T> extends StatefulWidget {
   final Widget child;
-  Color backgroundColor;
+  final Color backgroundColor;
 
   TopModalSheet(
       {Key? key, required this.child, this.backgroundColor = Colors.black54})
@@ -33,9 +33,10 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
   late Animation<double> _animation;
   late AnimationController _animationController;
   bool _isPoping = false;
-  late double _childHeight;
+  late Color _backgroundColor;
+  // late double _childHeight;
 
-  double _getChildHeight() {
+  double get _getChildHeight {
     final State state = _childKey.currentState!;
     //returns null:
     // final BuildContext context = _childKey.currentContext!;
@@ -52,8 +53,9 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _childHeight = _getChildHeight());
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => _childHeight = _getChildHeight());
+    _backgroundColor = widget.backgroundColor;
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _animation = Tween<double>(begin: -1, end: 0).animate(_animationController);
@@ -74,7 +76,7 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
 
     double primaryDelta = details.primaryDelta ?? 0.0;
 
-    var change = primaryDelta / _childHeight;
+    var change = primaryDelta / _getChildHeight;
     _animationController.value += change;
   }
 
@@ -85,7 +87,7 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
 
     if (details.velocity.pixelsPerSecond.dy > 700) {
       final double flingVelocity =
-          -details.velocity.pixelsPerSecond.dy / _childHeight;
+          -details.velocity.pixelsPerSecond.dy / _getChildHeight;
       if (_animationController.value > 0.0)
         _animationController.fling(velocity: flingVelocity);
     } else if (_animationController.value < 0.5) {
@@ -93,14 +95,14 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
         _animationController.fling(velocity: -1.0);
     } else {
       _animationController.reverse();
-      widget.backgroundColor = Colors.transparent;
+      _backgroundColor = Colors.transparent;
       setState(() {});
     }
   }
 
   Future<bool> onBackPressed({dynamic data}) async {
     _animationController.reverse();
-    widget.backgroundColor = Colors.transparent;
+    _backgroundColor = Colors.transparent;
     setState(() {});
 
     if (data != null) {
@@ -120,7 +122,7 @@ class TopModalSheetState<T> extends State<TopModalSheet<T>>
           onVerticalDragEnd: _handleDragEnd,
           child: SafeArea(
             child: Scaffold(
-              backgroundColor: widget.backgroundColor,
+              backgroundColor: _backgroundColor,
               body: Column(
                 key: _childKey,
                 children: <Widget>[
