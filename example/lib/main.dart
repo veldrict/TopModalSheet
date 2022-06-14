@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
+      statusBarBrightness:
+          Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.teal,
       systemNavigationBarDividerColor: Colors.grey,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.teal, visualDensity: VisualDensity.adaptivePlatformDensity,),
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: MyHomePage(),
     );
   }
@@ -51,19 +55,22 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Column(
           children: <Widget>[
-            Expanded(child: Center(
+            Expanded(
+                child: Center(
               child: Text("$_topModalData"),
             )),
             Row(
               children: [
-                Expanded(child: MaterialButton(
+                Expanded(
+                    child: MaterialButton(
                   color: Colors.white,
                   elevation: 5,
                   child: const Text("Show TopModal 1"),
                   onPressed: () async {
-                    var value = await showTopModalSheet<String>(context: context, child: DumyModal());
+                    var value = await showTopModalSheet<String>(
+                        context: context, child: DumyModal());
 
-                    if(value != null){
+                    if (value != null) {
                       setState(() {
                         _topModalData = value;
                       });
@@ -71,27 +78,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 )),
                 const VerticalDivider(),
-                Expanded(child: MaterialButton(
+                Expanded(
+                    child: MaterialButton(
                   color: Colors.white,
                   elevation: 5,
                   child: const Text("Show TopModal 2"),
                   onPressed: () async {
-                    var value = await Navigator.of(context).push<List<int>>(PageRouteBuilder(pageBuilder: (_, __, ___) {
-                      return TopModalSheet(
-                        key: _topModalSheetKey,
-                        child: Container(color: Colors.teal, height: MediaQuery.of(context).size.height * .2, child: Center(
-                          child: MaterialButton(
-                            color: Colors.white,
-                            child: const Text("Back", style: TextStyle(color: Colors.teal),),
-                            onPressed: () {
-                              _topModalSheetKey.currentState.onBackPressed(data: [1,2,3]);
+                    var value = await Navigator.of(context)
+                        .push<List<int>>(PageRouteBuilder(
+                            pageBuilder: (_, __, ___) {
+                              return TopModalSheet(
+                                key: _topModalSheetKey,
+                                child: Container(
+                                    color: Colors.teal,
+                                    height:
+                                        MediaQuery.of(context).size.height * .2,
+                                    child: Center(
+                                        child: MaterialButton(
+                                      color: Colors.white,
+                                      child: const Text(
+                                        "Back",
+                                        style: TextStyle(color: Colors.teal),
+                                      ),
+                                      onPressed: () {
+                                        _topModalSheetKey.currentState
+                                            .onBackPressed(data: [1, 2, 3]);
+                                      },
+                                    ))),
+                              );
                             },
-                          )
-                        )),
-                      );
-                    }, opaque: false));
+                            opaque: false));
 
-                    if(value != null){
+                    if (value != null) {
                       setState(() {
                         _topModalData = "$value";
                       });
@@ -118,8 +136,11 @@ class DumyModal extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-            child: const Text("Choose Wisely", style: TextStyle(color: Colors.white, fontSize: 20), textAlign: TextAlign.center),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+            child: const Text("Choose Wisely",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+                textAlign: TextAlign.center),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 5),
@@ -127,37 +148,45 @@ class DumyModal extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 5),
-                    child: OutlineButton(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 5),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Image.network("https://www.fifaindex.com/static/FIFA21/images/crest/10/light/1878.webp",
-                        height: MediaQuery.of(context).size.height * .15,
+                      primary: Colors.white,
+                      side: BorderSide(
+                        color: Colors.teal,
                       ),
-                      splashColor: Colors.white,
-                      highlightedBorderColor: Colors.teal,
-                      onPressed: () {
-                        Navigator.of(context).pop("Maquina");
-                      },
                     ),
-                  )
-                ),
+                    child: Image.network(
+                      "https://www.fifaindex.com/static/FIFA21/images/crest/10/light/1878.webp",
+                      height: MediaQuery.of(context).size.height * .15,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop("Maquina");
+                    },
+                  ),
+                )),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 10),
-                    child: OutlineButton(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 5, right: 10),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Image.network("https://www.fifaindex.com/static/FIFA20/images/crest/10/light/1028.webp",
-                        height: MediaQuery.of(context).size.height * .15,
+                      primary: Colors.white,
+                      side: BorderSide(
+                        color: Colors.teal,
                       ),
-                      splashColor: Colors.white,
-                      highlightedBorderColor: Colors.teal,
-                      onPressed: () {
-                        Navigator.of(context).pop("Monarcas");
-                      },
                     ),
-                  )
-                )
+                    child: Image.network(
+                      "https://www.fifaindex.com/static/FIFA20/images/crest/10/light/1028.webp",
+                      height: MediaQuery.of(context).size.height * .15,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop("Monarcas");
+                    },
+                  ),
+                ))
               ],
             ),
           ),
@@ -166,4 +195,3 @@ class DumyModal extends StatelessWidget {
     );
   }
 }
-

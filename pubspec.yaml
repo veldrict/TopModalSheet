@@ -1,11 +1,11 @@
 name: top_modal_sheet
 description: A simple top modal sheet implementation in pure dart. Menu button widget with handsome design and easy to use.
-version: 1.0.0
-repository: https://github.com/Pilaba/TopModalSheet
+version: 1.0.0+1
+repository: https://github.com/veldrict/TopModalSheet
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  sdk: ">=2.15.0 <3.0.0"
+  flutter: ">=2.8.0"
 
 dependencies:
   flutter:
